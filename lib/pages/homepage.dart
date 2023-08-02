@@ -1,9 +1,15 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  double result = 0;
+  final TextEditingController textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
@@ -26,10 +32,10 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "0",
-              style: TextStyle(
-                fontSize: 55,
+            Text(
+              "NRS ${result != 0 ? result.toStringAsFixed(2) : result.toStringAsFixed(0)}",
+              style: const TextStyle(
+                fontSize: 44,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -37,6 +43,7 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: TextField(
+                controller: textEditingController,
                 style: const TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   hintText: "Enter the ammount in USD",
@@ -62,14 +69,15 @@ class HomePage extends StatelessWidget {
               ),
               child: TextButton(
                 onPressed: () {
-                  if (kDebugMode) {
-                    print("you have clicked");
-                  }
+                  setState(() {
+                    result = double.parse(textEditingController.text) * 136.46;
+                  });
                 },
-                style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.black),
-                    minimumSize: MaterialStatePropertyAll(Size(500, 50))),
-                child: const Text("Click Me",
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  minimumSize: const Size(300, 50),
+                ),
+                child: const Text("Convert",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
