@@ -10,7 +10,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   double result = 0;
   final TextEditingController textEditingController = TextEditingController();
+
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
       borderSide: const BorderSide(
